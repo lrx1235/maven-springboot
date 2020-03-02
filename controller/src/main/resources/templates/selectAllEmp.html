@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>分页查询</title>
+</head>
+<body>
+<center>
+    <h3 style="align-content: center">全部职工</h3>
+    <table cellspacing="0" border="1">
+        <tr>
+            <td>用户名</td>
+            <td>email</td>
+            <td>性别</td>
+            <td>部门id</td>
+        </tr>
+        <tr th:each="employee:${employees}">
+            <td th:text="${employee.lastName}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.gender == 1}?'男':'女'"></td>
+            <td th:text="${employee.dId}"></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <a th:if="${page>1}" th:href="@{/Emp/selectAllEmp/}+${1}+@{/}+${2}">第一页</a>
+                <a th:if="${page>1}" th:href="@{/Emp/selectAllEmp/}+${page-1}+@{/}+${2}">上一页</a>
+                <a th:if="${page < pages}" th:href="@{/Emp/selectAllEmp/}+${page+1}+@{/}+${2}">下一页</a>
+                <a th:if="${page < pages}" th:href="@{/Emp/selectAllEmp/}+${pages}+@{/}+${2}">最后一页</a>
+            </td>
+
+        </tr>
+    </table>
+</center>
+</body>
+</html>

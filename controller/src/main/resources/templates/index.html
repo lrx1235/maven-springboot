@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script  type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").click(function () {
+                //将表单中的数据弄成地址栏的格式
+                var data = $("#indexform").serialize();
+                $.ajax({
+                    url: "Emp/indexSelect",
+                    type: "post",
+                    //必须设置，保证你提交的数据和后台返回是同步的
+                    async: false,
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.type == "success"){
+                            alert(data.msg);
+                         var lastName = $("#lastName").val();
+                           window.location.href="/Emp/selectEmpByLastName?lastName="+ lastName;
+                        }else {
+                            alert(data.msg);
+                            $("#lastName").val(null);
+                            $("#password").val(null);
+                            $("#vcode").val(null);
+                            $("#lastName").focus();
+                        }
+                    }
+                });
+                return false;
+            });
+
+            $("#btn1").click(function () {
+                window.location.href="/register";
+
+            });
+
+            $("#vcodeImg").click(function(){
+                this.src="/Emp/getCpacha?vl=4&w=160&h=40&t="+new Date().getTime();
+            });
+        });
+    </script>
+</head>
+<body>
+<center>
+<form id="indexform">
+    <table border="1" cellspacing="0">
+        <tr>
+            <td>账号：</td>
+            <td><input id="lastName" type="text" name="lastName"/></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><input id="password" type="password" name="password"/></td>
+        </tr>
+        <tr>
+            <td>请输入验证码：</td>
+            <td><input id="vcode" type="text" name="vcode" />
+                <img title="点击图片切换验证码" id="vcodeImg" src="/Emp/getCpacha?vl=4&w=160&h=40">
+            </td>
+        </tr>
+        <tr style="align-content: center">
+            <td colspan="2">
+                <button  type="button" id="btn">登录</button>
+                <button  type="button" id="btn1">注册</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</center>
+</body>
+</html>

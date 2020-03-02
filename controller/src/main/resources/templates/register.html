@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script  type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#password").blur(function () {
+                //正则表达式
+                var reg = /^\S{6}$/;
+                var password = $("#password").val();
+                if(!reg.test(password)){
+                    $("#p2").html("请输入6位以上密码");
+                    $("#p2").css("color","red");
+                    return;
+                }else{
+                    $("#p2").html("输入正确");
+                    $("#p2").css("color","green");
+                    return;
+                }
+            });
+
+            $("#email").blur(function () {
+                //正则表达式
+                var reg = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+                var email = $("#email").val();
+                if(!reg.test(email)){
+                    $("#p3").html("请输入正确的邮箱");
+                    $("#p3").css("color","red");
+                    return;
+                }else{
+                    $("#p3").html("输入正确");
+                    $("#p3").css("color","green");
+                    return;
+                }
+            });
+
+            $("#registerForm").submit(function () {
+                //将表单中的数据弄成地址栏的格式
+                var data = $("#registerForm").serialize();
+                $.ajax({
+                    url: "/Emp/insertEmp",
+                    type: "post",
+                    //必须设置，保证你提交的数据和后台返回是同步的
+                    async: false,
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.type == "success"){
+                            alert(data.msg);
+                        }else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+                //因为用的是form表单，ajax会提交一次，form表单自带的也会提交，在onclick/submit事件最后加上return false,form表单就不会再提交，不然就是提交两次，所以报上面那个错。
+                return false;
+            });
+            $("#btn3").click(function () {
+                window.location.href="/index";
+            });
+        });
+    </script>
+</head>
+<body>
+<h2>注册</h2>
+<center>
+<form id="registerForm">
+    <table border="1" cellspacing="0">
+        <tr>
+            <td>账号:</td>
+            <td><input id="lastName" type="text" name="lastName" placeholder="请输入用户名"></td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td><input id="password" type="password" name="password" placeholder="请输入6位密码"><span id="p2"></span></td>
+        </tr>
+        <tr>
+            <td>email:</td>
+            <td><input id="email" type="text" name="email" placeholder="请输入邮箱"><span id="p3"></span></td>
+        </tr>
+        <tr>
+            <td>性别:</td>
+            <td>
+                <input type="radio" name="gender" value="1" />男
+                <input type="radio" name="gender" value="2" />女
+            </td>
+        </tr>
+        <tr>
+            <td>部门</td>
+            <td>
+                <select name="dId">
+                    <option style="width:200px" value="1">前端部门</option>
+                    <option style="width:200px" value="2">后端部门</option>
+                    <option style="width:200px" value="3">采财务部门</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="注册"></td>
+            <td><button type="button" id="btn3">返回</button></td>
+        </tr>
+    </table>
+
+</form>
+</center>
+</body>
+</html>

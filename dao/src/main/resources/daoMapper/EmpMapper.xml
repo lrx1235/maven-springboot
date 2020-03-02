@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.lrx.daoMapper.EmpMapper">
+
+    <select id="selectEmpById" parameterType="Integer" resultType="Employee">
+        select * from employee where id = #{id}
+    </select>
+
+    <select id="indexSelect" resultType="Employee">
+        select * from employee where last_name=#{lastName} and password=#{password}
+    </select>
+
+    <select id="selectEmpByLastName" parameterType="String" resultType="Employee">
+        select * from employee where last_name = #{lastName}
+    </select>
+
+    <insert id="insertEmp" parameterType="Employee">
+        insert into employee(last_name,password,email,gender,d_id) values (#{lastName},#{password},#{email},#{gender},#{dId});
+    </insert>
+
+    <update id="updateEmp" parameterType="Employee">
+       update employee set last_name=#{lastName},password=#{password},email=#{email},gender=#{gender},d_id=#{dId} where id = #{id}
+    </update>
+
+    <select id="selectAllEmp" resultType="Employee">
+        select * from employee
+    </select>
+</mapper>

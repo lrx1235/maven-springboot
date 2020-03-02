@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查询结果</title>
+</head>
+<body>
+<center>
+<table style="" cellspacing="0" border="1">
+    <tr>
+        <td>用户名</td>
+        <td>email</td>
+        <td>性别</td>
+        <td>部门id</td>
+        <td>操作</td>
+    </tr>
+    <tr>
+        <td th:text="${employee.lastName}"></td>
+        <td th:text="${employee.email}"></td>
+        <td th:text="${employee.gender == 1}?'男':'女'"></td>
+        <td th:text="${employee.dId}"></td>
+        <td><a th:href="@{/Emp/selectByEmpId/}+${employee.id}">修改</a></td>
+    </tr>
+</table>
+</center>
+</body>
+</html>
